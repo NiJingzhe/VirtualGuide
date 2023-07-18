@@ -1,0 +1,12 @@
+*.code-workspace
+demo/train_data/*.simp
+demo/train_data/*.seg
+demo/train_data/*.bz2
+demo/train_data/*.text
+demo/model/*.npy
+demo/__pycache__/*
+demo/model/*.bin
+demo/model/*.model
+demo/lib/__pycache__/*.pyc
+demo/train_data/zhihu.txt
+Interaction_Guide/*.pdf
