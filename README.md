@@ -48,4 +48,11 @@
     PS D:\Proj\VirtualGuide\demo> python .\tools.py --mode=train --input-file-path=./train_data/zhihu.seg --model-path=./model/zhwiki.model --output-file-path=./model/zhwiki.model
     ```
 
+## 二、贡献代码
+
+### ！！！ 本仓库以master-develop分支模型为基础 ！！！
+
+- 首先Fork本仓库，在更改前请在develop分支上创建自己的开发分支
+
+- 开发完成后请做相关的可行性测试，测试通过后可以尝试将自己的分支合并回develop分支并提交PR
 
