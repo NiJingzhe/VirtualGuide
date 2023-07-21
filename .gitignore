@@ -10,3 +10,4 @@ demo/model/*.model
 demo/lib/__pycache__/*.pyc
 demo/train_data/zhihu.txt
 Interaction_Guide/*.pdf
+demo/lib/API_KEY.py

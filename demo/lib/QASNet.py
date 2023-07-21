@@ -79,8 +79,4 @@ class QASNet(object):
         '''
         spyder = ZhihuSpyder()
         answer_list = spyder.grab_topic_to_list(question)
-        total_answer = ''
-        for answer in answer_list[:3]:
-            if len(self.encoder.encode(total_answer + answer)) < 4096:
-                total_answer += answer
-        return total_answer
+        return answer_list[:2]

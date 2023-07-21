@@ -6,6 +6,7 @@ class GPTAbility(object):
 
     def __init__(self, api_key, personality = "") -> None:
         openai.api_key = api_key
+        openai.organization = "org-CnuVGDChBhQiYfR3jhkgKGMY"
         self.encoder = tiktoken.get_encoding("cl100k_base")
         self.cost = 0
         self.chat_history = [
@@ -129,3 +130,12 @@ Choose ONLY from the list of tags provided here:
             return final_answer.strip()
         else:
             return final_answer
+        
+    def sound2text(self, sound_file):
+        '''
+        使用Wishper模型实现语音转文字
+        '''
+        audio_file= open(sound_file, "rb")
+        transcript = openai.Audio.transcribe("whisper-1", audio_file)
+        audio_file.close()
+        return transcript["text"]

@@ -67,11 +67,16 @@ if __name__ == "__main__":
     if mode == "test":
         print("launching test mode...")
         virtual_guide = VirtualGuide(model_path, input_file_path)
-        user_q = input("Please input your question: ")
-        while user_q != "exit":
+        print("embedding model loaded successfully.")
+        print("ask your question:")
+        user_q = virtual_guide.hear_question("./test_data/question.wav")
+        print(user_q)
+        while user_q != "exit" and user_q != "quit" and user_q != "退出":
             virtual_guide.answer(user_q)
             print("------------------------------------------")
-            user_q = input("Please input your question: ")
+            print("ask your question: ", end="")
+            user_q = virtual_guide.hear_question("./test_data/question.wav")
+            print(user_q)
 
     if mode == "visualize":
         print("launching visualize mode...")
