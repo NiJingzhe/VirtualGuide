@@ -1,7 +1,7 @@
 from duckduckgo_search import DDGS 
 from bs4 import BeautifulSoup as bs
 import requests
-
+import time
 
 class ZhihuSpyder(object):
     def __init__(self):
@@ -25,6 +25,7 @@ class ZhihuSpyder(object):
                     print('---------------------------------------------')
                     total_artical += artical
                     self.history_herf.append(herf)
+                    time.sleep(0.5)
             
             #把已经抓取的内容读出来，加上新的一并写入文件
             try:
@@ -41,3 +42,26 @@ class ZhihuSpyder(object):
 
     def clear_history_herf(self):
         self.history_herf = []
+
+    def grab_topic_to_list(self, topic, top_n = 3):
+        with DDGS(proxies="socks5://localhost:7890", timeout=20) as ddgs:
+            total_artical = []
+            count = 0
+            for result in list(ddgs.text(topic)):
+                herf = result['href']
+                if herf.startswith('https://zhuanlan.zhihu.com/') and count < top_n:
+                    #接下来向herf发起请求
+                    print(herf)
+                    response = requests.get(herf)
+                    soup = bs(response.text, 'lxml')
+                    artical = ''
+                    #class_这么写的原因可以到知乎专栏里通过浏览器控制台查看他的页面结构
+                    for div in soup.find_all(name = 'div', attrs={'class' : "RichText ztext Post-RichText css-1g0fqss"}):
+                        artical += div.text
+                    print(artical, '\n')
+                    print('---------------------------------------------')
+                    total_artical.append(artical)
+                    count += 1  
+                    time.sleep(0.5)
+            
+            return total_artical

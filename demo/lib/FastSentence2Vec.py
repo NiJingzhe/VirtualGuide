@@ -1,8 +1,3 @@
-'''
- 由于Word2Vec得到的是词语的向量，我们要求解句子的向量就需要一种方法根据词语的向量得到句子的向量。
- 这里使用最简单的方法，就是将句子中的词语向量加权平均，权重为词语的词性。
- 权重可以参考factor字典，其中规定了各种词性对应的权重。
-'''
 import jieba.posseg as pseg
 from gensim.models import Word2Vec as w2v
 import numpy as np

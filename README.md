@@ -42,6 +42,11 @@
       
       - `--input-file-path`：测试时的输入文件，一般是`test_data`中的`data.json`这样的`Q&A`对，用于构建本地问题库
 
+    - `visualize`:
+      
+      - `--model-path`：可视化时选择加载的模型路径
+      - `input-file-path`：需要可视化的词语列表文件，一行一个词语
+
     **一个使用tools脚本的实际例子**
 
     ```powershell

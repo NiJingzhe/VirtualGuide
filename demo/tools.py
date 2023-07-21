@@ -1,7 +1,10 @@
 from lib.PreTrainer import Word2VecPreTrain
 from lib.TrainDataPreProcesser import PreProcesser
 from lib.ZhihuSpyder import ZhihuSpyder
-from QASNet import QASNet
+from lib.VirtualGuide import VirtualGuide
+
+from sklearn.decomposition import PCA
+from matplotlib import pyplot
 import sys
 import getopt
 
@@ -63,14 +66,35 @@ if __name__ == "__main__":
 
     if mode == "test":
         print("launching test mode...")
-        qas_net = QASNet(model_path, input_file_path)
-        
+        virtual_guide = VirtualGuide(model_path, input_file_path)
         user_q = input("Please input your question: ")
         while user_q != "exit":
-            print("-------------------------------------------------")
-            print("top 3 questions and answers:")
-            for q_v_a in qas_net.ann_search(user_q, 3):
-                print("\nquestion: ",q_v_a[0], "\nanswer: ",q_v_a[2], "\nsimilariry: ", q_v_a[1])
-            print("-------------------------------------------------")
+            virtual_guide.answer(user_q)
+            print("------------------------------------------")
             user_q = input("Please input your question: ")
-            
+
+    if mode == "visualize":
+        print("launching visualize mode...")
+        word_list_file = input_file_path
+        import gensim.models.word2vec as w2v
+        import matplotlib.pyplot as plt
+        plt.rc("font", family='Microsoft YaHei')
+        model = w2v.Word2Vec.load(model_path)
+        print("model loaded successfully.")
+
+        with open(word_list_file, mode="r", encoding="utf-8") as input_f:
+            words = input_f.read().splitlines()
+            input_f.close()
+
+        vectors = [model.wv[word] for word in words]
+
+        # 使用PCA对向量进行降维
+        pca = PCA(n_components=3)
+        pca_vectors = pca.fit_transform(vectors)
+        print("PCA finished.")
+        # 绘制降维后的向量
+        plt.figure(figsize=(10, 10))
+        plt.scatter(pca_vectors[:, 0], pca_vectors[:, 1])
+        for i, word in enumerate(words):
+            plt.annotate(word, xy=(pca_vectors[i, 0], pca_vectors[i, 1]))
+        plt.show()
